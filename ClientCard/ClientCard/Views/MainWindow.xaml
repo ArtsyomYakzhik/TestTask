@@ -1,0 +1,31 @@
+﻿<Window x:Class="ClientCard.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:ClientCard.ViewModels"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.DataContext>
+        <vm:MainViewModel />
+    </Window.DataContext>
+    <Grid x:Name="MainGrid">
+        <TextBox x:Name="NewCard" VerticalAlignment="Center" Margin="0 0 600 200" Width="100" FontSize="14" />
+        <Button Width="100" Height="20" Margin="0 0 600 100" Content="{Binding ImagePath, FallbackValue=Choose}" Command="{Binding ChooseImag}"/>
+        <Button Width="50" Height="20" Margin="0 0 650 0" Command="{Binding AddFilmCard}" CommandParameter="{Binding ElementName=NewCard, Path=Text}" Content="Add"/>
+        <Button Width="50" Height="20" Margin="0 0 540 0" Content="Change"  Command="{Binding ChangeFilmCard}" CommandParameter="{Binding ElementName=NewCard, Path=Text}"/>
+        <Button Width="50" Height="20" Margin="0 0 430 0" Content="Delete" Command="{Binding RemoveFilmCard}" CommandParameter="{Binding ElementName=NewCard, Path=Text}"/>
+
+        <ListBox HorizontalContentAlignment="Stretch" Width="400" Height="400" Margin="375 0 0 0" ItemsSource="{Binding FilmCards}" SelectedItem="{Binding Path=SelectedCard, Mode=TwoWay}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <UniformGrid Columns="1">
+                    <TextBlock Text="{Binding filmName}"/>
+                        <Image Height="100" Width="200" Source="{Binding posterPath}"/>
+                    </UniformGrid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        
+    </Grid>
+</Window>
